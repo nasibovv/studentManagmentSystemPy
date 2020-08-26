@@ -24,10 +24,27 @@ def studCodeCheck():  # I used same lines of code 2-3 times that's why changed t
     return studentCode
 
 
+def studCodeCheck2(studCode):
+    while True:
+        if studentCodeCheck2.isdigit():
+            if 1 <= int(studentCodeCheck2) / 100 < 10:
+                break
+            else:
+                print("Error! Student Code should not be more than 3 digit!\n Please try again!\n")
+        else:
+            print("\nPlease use numeric value! Try again!")
+
+    for check, check1 in enumerate(studentCodeArr):
+        if check1 == studentCodeCheck2:
+            index = check
+
+    return index
+
+
 studentInfo = {}
 times = 0
 i = 1
-studentCodeArr = [None] * i
+studentCodeArr = []
 
 while True:
     print("\t\tWelcome!")
@@ -130,7 +147,7 @@ while True:
                 else:
                     print("Invalid phone number length! (Note: it should be 12 digit with opcode)\nPlease try again!")
 
-            studentInfo[studentCode[i]] = Student(name, surname, mail, number)
+            studentInfo[studentCode] = Student(name, surname, mail, number)
 
             print("%d. student added to system successfully !\n " % j)
             j += 1
@@ -141,73 +158,90 @@ while True:
 
     elif choice == 2:
 
-        print("Please enter the Student Code you want to delete: \n")
+        studentCodeCheck2 = input("Please enter the Student Code you want to delete: ")
 
-        studentCodeCheck = studCodeCheck()
+        arrIndex = studCodeCheck2(studentCodeCheck2)
 
-        for check, check1 in enumerate(studentCodeArr):
-            if check1 == studentCodeCheck:
-                index = check
-
-        studentCodeArr.pop(index)
-        print("{}. student removed successfully!".format(studentCodeCheck))
+        studentCodeArr.pop(arrIndex)
+        print("Student removed successfully!")
 
         sleep(3)
         os.system('cls' if os.name == 'nt' else 'clear')
 
     elif choice == 3:
 
-        print("Please enter the Student Code you want to update: \n")
+        studentCodeCheck2 = input("Please enter the Student Code you want to update: ")
+        arrIndex = studCodeCheck2(studentCodeCheck2)
 
-        studentCodeCheck2 = studCodeCheck()
-
-        for check, check1 in enumerate(studentCodeArr):
-            if check1 == studentCodeCheck2:
-                index = check
-
-        change = input("What you want to update? (name, surname, email, phone)")
+        print(studentInfo.get(studentCodeArr[arrIndex]).name)
+        change = input("What you want to update? (name, surname, email, phone): ")
 
         if change == "name":
             while True:
                 nameCh = input("Please enter NEW name: ")
-                if studentInfo[studentCodeArr[i]].name == nameCh:
+                if studentInfo[studentCodeArr[arrIndex]].name == nameCh:
                     print("\nNames are same! Please enter new one!")
                 else:
-                    studentInfo[studentCodeArr[i]].name = nameCh
-                    print("Name successfully updated!")
+                    studentInfo[studentCodeArr[arrIndex]].name = nameCh
+                    print("Student's name successfully updated!")
                     break
 
         elif change == "surname":
             while True:
                 surnameCh = input("Please enter NEW surname: ")
-                if studentInfo[studentCodeArr[i]].surname == surnameCh:
+                if studentInfo[studentCodeArr[arrIndex]].surname == surnameCh:
                     print("\nSurnames are same! Please enter new one!")
                 else:
-                    studentInfo[studentCodeArr[i]].surname = surnameCh
+                    studentInfo[studentCodeArr[arrIndex]].surname = surnameCh
                     print("Surname successfully updated!")
                     break
 
         elif change == "email":
             while True:
                 mailCh = input("Please enter NEW email: ")
-                if studentInfo[studentCodeArr[i]].mail == mailCh:
+                if studentInfo[studentCodeArr[arrIndex]].mail == mailCh:
                     print("\nMails are same! Please enter new one!")
                 else:
-                    studentInfo[studentCodeArr[i]].mail = mailCh
+                    studentInfo[studentCodeArr[arrIndex]].mail = mailCh
                     print("\nMail successfully updated!")
                     break
 
         else:
             while True:
                 phoneCh = input("Please enter NEW phone number")
-                if studentInfo[studentCodeArr[i]].number == phoneCh:
+                if studentInfo[studentCodeArr[arrIndex]].number == phoneCh:
                     print("\nPhone numbers are same! Please enter new one!")
                 else:
-                    studentInfo[studentCodeArr[i]].number = phoneCh
+                    studentInfo[studentCodeArr[arrIndex]].number = phoneCh
                     print("\nPhone number successfully updated!")
                     break
 
         sleep(3)
+        os.system('cls' if os.name == 'nt' else 'clear')
+
+    elif choice == 4:
+
+        studentCodeCheck2 = input("Please enter the Student Code you want to view: ")
+        arrIndex = studCodeCheck2(studentCodeCheck2)
+
+        print(f"\n\nStudent's Student Code: {studentCodeCheck2}\n")
+        print(f"Student's Name: {studentInfo[studentCodeArr[arrIndex]].name}")
+        print(f"Student's Surname: {studentInfo[studentCodeArr[arrIndex]].surname}")
+        print(f"Student's Mail Address: {studentInfo[studentCodeArr[arrIndex]].mail}")
+        print(f"Student's Phone Number: {studentInfo[studentCodeArr[arrIndex]].number}")
+
+        sleep(5)
+        os.system('cls' if os.name == 'nt' else 'clear')
+
+    elif choice == 5:
+        for x in range(0, len(studentInfo)):
+            print(f"\nStudent's Student Code: {studentCodeArr[x]}\n")
+            print(f"Student's Name: {studentInfo[studentCodeArr[x]].name}")
+            print(f"Student's Surname: {studentInfo[studentCodeArr[x]].surname}")
+            print(f"Student's Mail Address: {studentInfo[studentCodeArr[x]].mail}")
+            print(f"Student's Phone Number: {studentInfo[studentCodeArr[x]].number}\n")
+
+        sleep(5)
         os.system('cls' if os.name == 'nt' else 'clear')
 
     elif choice == 6:
